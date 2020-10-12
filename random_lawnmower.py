@@ -101,8 +101,14 @@ class Game:
     def update_screen(self, index, rnd, turn, message=None):
         x = [[0 for j in range(RANGES[1][0], RANGES[1][1] + SCALE, SCALE)]
             for i in range(RANGES[0][0], RANGES[0][1] + SCALE, SCALE)]
-        x[int(-RANGES[0][0] // SCALE)][int(-RANGES[1][0] // SCALE)] = -1
-        x[int(-RANGES[0][0] // SCALE)][int(self.d // SCALE - RANGES[1][0] // SCALE)] = -1
+        x[int(-RANGES[0][0] // SCALE)][int(-RANGES[1][0] // SCALE)] = -2
+        x[int(-RANGES[0][0] // SCALE)][int(self.d // SCALE - RANGES[1][0] // SCALE)] = -2
+        for i in range(RANGES[0][0], RANGES[0][1] + SCALE, SCALE):
+            for j in range(RANGES[1][0], RANGES[1][1] + SCALE, SCALE):
+                i1, j1 = int(i // SCALE - RANGES[0][0] // SCALE), int(j // SCALE - RANGES[1][0] // SCALE)
+                if sum((k - l) ** 2 for (k, l) in zip((i, j), (0, 0))) ** 0.5 + \
+                    sum((k - l) ** 2 for (k, l) in zip((i, j), (0, self.d))) ** 0.5 > self.rope:
+                    x[i1][j1] = -1
         for (p, pl) in zip(self.prior, self.player_moves):
             possible_range = [j for j in range(RANGES[1][0], RANGES[1][1] + SCALE, SCALE) if p + self.d - self.rope <= j <= p]
             for i in range(RANGES[0][0], RANGES[0][1] + SCALE, SCALE):
@@ -117,7 +123,7 @@ class Game:
             os.system('cls')
         else:
             os.system('clear')
-        color_key = ['\033[0m ', '\033[91m1', '\033[92m2', '\033[0mX']
+        color_key = ['\033[92m.', '\033[91m1', '\033[94m2', '\033[0mX', '\033[37m#']
         print('\n'.join(''.join(color_key[j] for j in i) for i in x))
         print(f'\033[91m1\033[0m = {self.client_names[(rnd + 1) % 2]}, \033[92m2\033[0m = {self.client_names[rnd % 2]}')
         if message:
