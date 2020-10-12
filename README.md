@@ -3,6 +3,8 @@
 
 des480@nyu.edu
 
+Game description: [https://cs.nyu.edu/courses/fall20/CSCI-GA.2965-001/randomower.html]
+
 ### Driver
 
 The driver is random_lawnmower.py. It is written in Python 3 and should be called as
@@ -13,7 +15,7 @@ The distance between posts and length of the rope can be changed by passing diff
 
 In the process of running a round, the driver will first wait for each player to create a socket connecting to `localhost:8000` (or the site given), then for each player to send a string of the form `1 <player name>` if they are the first player or `2 <player name>` if they are the second player. Player names may have spaces or other special characters. Players should only send in a string of this form at the start of the whole game. After receiving these strings, the driver will start a round in which the first player goes first and the second player goes second, then following the turn order given in the problem description. After that round concludes, the driver will start a round in which player order reverses.
 
-On each player's turn, that player will be sent through their socket connection a JSON object representing the current game state, of the form
+On each player's turn, that player will be sent through their socket connection a JSON object representing the current game state, of the form (without newlines or spaces except for a single space after each colon or comma)
 ```
 {
     "player_number": <1 if first, 2 if second>,
