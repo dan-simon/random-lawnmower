@@ -13,9 +13,9 @@ RANGES = [-250, 250], [-200, 1200]
 def area(r1, r2, d):
     if r1 + r2 < d:
         return 0
-    if r1 + d < r2:
+    if r1 + d <= r2:
         return math.pi * r1 ** 2
-    if r2 + d < r1:
+    if r2 + d <= r1:
         return math.pi * r2 ** 2
     return r1 ** 2 * math.acos((d ** 2 + r1 ** 2 - r2 ** 2) / (2 * d * r1)) + \
         r2 ** 2 * math.acos((d ** 2 - r1 ** 2 + r2 ** 2) / (2 * d * r2)) - \
